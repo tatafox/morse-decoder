@@ -38,7 +38,35 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let result = ''
+
+    for (let i = 0; i < expr.length; i += 10) {
+
+        //обрезаем строку
+        let str = expr.substring(i, i + 10);
+        
+        //проверяем на пробел
+        if (str === '**********') {
+            result += ' ';
+            continue;
+        }
+
+    //Преобразовываем каждую пару цифр (берем пары согласно условию, остальные игнорируем, пропуская тем самы нули)
+        let symbol = '';
+        for (let j = 0; j < 10; j += 2) {
+            if (str.substring(j, j + 2) === '10') {
+                symbol += '.';
+            } 
+            else if (str.substring(j, j + 2) === '11') {
+                symbol += '-';
+            }
+        }
+        
+        // Добавляем к результату значение найденное в таблице
+        result += MORSE_TABLE[symbol];
+    }
+
+    return result;
 }
 
 module.exports = {
